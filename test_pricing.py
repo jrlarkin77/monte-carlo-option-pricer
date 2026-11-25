@@ -1,8 +1,3 @@
-r"""
-to test, open new terminal, navigate to file (cd C:\Users\Jryle\Documents\Projects\Monte_Carlo) 
-then run with pytest (& "C:\Users\Jryle\anaconda3\python.exe" -m pytest test_pricing.py -v)
-"""
-
 import numpy as np
 from pricing import (
     black_scholes_call,
@@ -11,6 +6,8 @@ from pricing import (
     monte_carlo_put,
     LSM_put,
 )
+
+np.random.seed(0)
 
 S0, K, T, r, sigma = 100, 105, 1, 0.05, 0.2
 

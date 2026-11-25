@@ -140,7 +140,7 @@ def sim_paths(S0, T, r, sigma, n_steps, n_sims):
     return paths
 
 
-def LSM_put(S0, K, T, r, sigma, n_steps, n_sims):
+def LSM_put(S0, K, T, r, sigma, n_steps, n_sims, return_european=False):
 
     """
     Uses Longstaff-Schwartz method to price an American put option using Monte Carlo simulation.
@@ -188,6 +188,9 @@ def LSM_put(S0, K, T, r, sigma, n_steps, n_sims):
         cash_flows[index] = payoff[index, t]                        #grabs payoff of each of those paths and overwrites the corresponding cash flow value
         cash_flows_t[index] = t                                     #update the time when the option should be exercised
 
-    price = np.mean(cash_flows * np.exp(-r * dt * cash_flows_t))    #discounts the cash flows and averages them to get the option price
+    american = np.mean(cash_flows * np.exp(-r * dt * cash_flows_t))
+    european = np.exp(-r * T) * np.mean(payoff[:, -1])  #euro put form same paths
 
-    return price
+    if return_european:
+        return american, european
+    return american
